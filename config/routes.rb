@@ -2,14 +2,23 @@ Sampleapp::Application.routes.draw do
   resources :users do
     member do
 	  get :following, :followers
+	  get :taking
 	end
   end
+  resources :courses do
+    member do
+	  get :enlisters
+	end
+  end
+  
   resources :sessions,   	only: [:new, :create, :destroy]
   resources :microposts, 	only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
+  resources :enrollments,      only: [:create, :destroy]
 
   root to: 'static_pages#home'
   
+  match '/coursec', to: 'courses#new'
   match '/signup',  to: 'users#new'
   match '/signin',	to: 'sessions#new'
   match '/signout', to: 'sessions#destroy', via: :delete

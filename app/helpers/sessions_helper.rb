@@ -28,6 +28,10 @@ module SessionsHelper
     user == current_user
   end
   
+  def admin_user
+	redirect_to(root_path) unless current_user.admin?
+  end
+  
   def sign_out
     self.current_user = nil
 	cookies.delete(:remember_token)

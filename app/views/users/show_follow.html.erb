@@ -4,7 +4,11 @@
     <section>
 	  <%= gravatar_for @user %>
 	  <h1><%= @user.name %></h1>
-	  <span><%= link_to "view my profile", @user %></span>
+	  <% if current_user.id != @user.id %>
+	    <span><%= link_to "view their profile", @user %></span>
+	  <% else %>
+	    <span><%= link_to "view my profile", @user %></span>
+	  <% end %>
 	  <span><b>Microposts:</b><%= @user.microposts.count %></span>
 	</section>
 	<section>

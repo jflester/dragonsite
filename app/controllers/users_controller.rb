@@ -61,15 +61,18 @@ class UsersController < ApplicationController
 	render 'show_follow'
   end
   
+  def taking
+    @title = "Course List"
+	@user = User.find(params[:id])
+	@courses = @user.taking_courses.paginate(page: params[:page])
+	render 'show_enroll'
+  end
+  
   private
 	
 	def correct_user
       @user = User.find(params[:id])
       redirect_to(root_path) unless current_user?(@user)
     end
-	
-	def admin_user
-	  redirect_to(root_path) unless current_user.admin?
-	end
 
 end

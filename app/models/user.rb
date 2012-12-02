@@ -12,6 +12,7 @@
 class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation
   has_secure_password
+  
   has_many :microposts, dependent: :destroy
   has_many :relationships, foreign_key: "follower_id", dependent: :destroy
   has_many :followed_users, through: :relationships, source: :followed
@@ -19,6 +20,11 @@ class User < ActiveRecord::Base
 								   class_name: "Relationship",
 								   dependent: :destroy
   has_many :followers, through: :reverse_relationships, source: :follower
+  
+  has_many :courses
+  has_many :enrollments, foreign_key: "user_id", dependent: :destroy
+  has_many :taking_courses, through: :enrollments, source: :course
+  
   before_save { |user| user.email = email.downcase }
   before_save :create_remember_token
   
@@ -29,6 +35,8 @@ class User < ActiveRecord::Base
 					uniqueness: { case_sensitive: false }
   validates :password, presence: true, length: { minimum: 6 }
   validates :password_confirmation, presence: true
+  
+  default_scope order: 'users.name'
   
   def feed
 	Micropost.from_users_followed_by(self)
@@ -44,6 +52,18 @@ class User < ActiveRecord::Base
   
   def unfollow!(other_user)
     self.relationships.find_by_followed_id(other_user.id).destroy
+  end
+  
+  def enrolling?(this_course)
+    enrollments.find_by_course_id(this_course.id)
+  end
+  
+  def enroll!(this_course)
+    self.enrollments.create!(course_id: this_course.id)
+  end
+  
+  def unenroll!(this_course)
+    self.enrollments.find_by_course_id(this_course.id).destroy
   end
   
   private

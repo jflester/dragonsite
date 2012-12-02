@@ -11,7 +11,28 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121124201211) do
+ActiveRecord::Schema.define(:version => 20121202100332) do
+
+  create_table "courses", :force => true do |t|
+    t.string   "course_name"
+    t.string   "semester"
+    t.integer  "user_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "courses", ["course_name", "semester", "user_id"], :name => "index_courses_on_course_name_and_semester_and_user_id"
+
+  create_table "enrollments", :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "enrollments", ["course_id"], :name => "index_enrollments_on_course_id"
+  add_index "enrollments", ["user_id", "course_id"], :name => "index_enrollments_on_user_id_and_course_id", :unique => true
+  add_index "enrollments", ["user_id"], :name => "index_enrollments_on_user_id"
 
   create_table "microposts", :force => true do |t|
     t.string   "content"
@@ -41,6 +62,8 @@ ActiveRecord::Schema.define(:version => 20121124201211) do
     t.string   "password_digest"
     t.string   "remember_token"
     t.boolean  "admin",           :default => false
+    t.boolean  "professor",       :default => false
+    t.boolean  "ta",              :default => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
