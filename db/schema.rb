@@ -11,7 +11,31 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121202100332) do
+ActiveRecord::Schema.define(:version => 20121202132805) do
+
+  create_table "assignment_courses", :force => true do |t|
+    t.integer  "assignment_id"
+    t.integer  "course_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  add_index "assignment_courses", ["assignment_id"], :name => "index_assignment_courses_on_assignment_id"
+  add_index "assignment_courses", ["course_id", "assignment_id"], :name => "index_assignment_courses_on_course_id_and_assignment_id", :unique => true
+  add_index "assignment_courses", ["course_id"], :name => "index_assignment_courses_on_course_id"
+
+  create_table "assignments", :force => true do |t|
+    t.string   "name"
+    t.datetime "due_date"
+    t.integer  "total_points"
+    t.boolean  "published",    :default => false
+    t.integer  "course_id"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
+
+  add_index "assignments", ["course_id"], :name => "index_assignments_on_course_id"
+  add_index "assignments", ["name"], :name => "index_assignments_on_name"
 
   create_table "courses", :force => true do |t|
     t.string   "course_name"

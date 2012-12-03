@@ -12,6 +12,14 @@
 	</section>
   </aside>
   <div class="span8">
-    <%= render 'enroll_form' %>
+    <%= render 'enroll_form' if signed_in?%>
+	<%= link_to "Make Assignment", "/assignmentc?course_id=#{@course.id}" %>
+	<% if @course.assignments.any? %>
+	  <h3>Assignments (<%= @course.assignments.count %>)</h3>
+	  <ul class="assignments" %>
+		<%= render @assignments %>
+	  </ul>
+	  <%= will_paginate @assignments %>
+	<% end %>
   </div>
 </div>

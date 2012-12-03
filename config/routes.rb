@@ -14,17 +14,19 @@ Sampleapp::Application.routes.draw do
   resources :sessions,   	only: [:new, :create, :destroy]
   resources :microposts, 	only: [:create, :destroy]
   resources :relationships, only: [:create, :destroy]
-  resources :enrollments,      only: [:create, :destroy]
+  resources :enrollments,   only: [:create, :destroy]
+  resources :assignments,   only: [:show, :index, :create, :destroy, :edit, :update]
 
   root to: 'static_pages#home'
   
-  match '/coursec', to: 'courses#new'
-  match '/signup',  to: 'users#new'
-  match '/signin',	to: 'sessions#new'
-  match '/signout', to: 'sessions#destroy', via: :delete
-  match '/help',    to: 'static_pages#help'
-  match '/about',   to: 'static_pages#about'
-  match '/contact', to: 'static_pages#contact'
+  match '/assignmentc', to: 'assignments#new'
+  match '/coursec', 	to: 'courses#new'
+  match '/signup',  	to: 'users#new'
+  match '/signin',		to: 'sessions#new'
+  match '/signout', 	to: 'sessions#destroy', via: :delete
+  match '/help',    	to: 'static_pages#help'
+  match '/about',   	to: 'static_pages#about'
+  match '/contact', 	to: 'static_pages#contact'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

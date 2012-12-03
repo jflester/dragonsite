@@ -1,0 +1,8 @@
+<li>
+  <%= link_to assignment.name, assignment %>
+   | Due: <small> <%= assignment.due_date %></small>
+  <% if current_user.admin? %>
+    | <%= link_to "delete", assignment, method: :delete,
+									data: { confirm: "Are you sure?" } %>
+  <% end %>
+</li>

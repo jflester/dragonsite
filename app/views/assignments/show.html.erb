@@ -1,0 +1,16 @@
+<% provide(:title, @assignment.name) %>
+<div class="row">
+  <aside class="span4">
+    <section>
+      <h1>
+	    <%= @assignment.name %>
+	  </h1>
+	  <small><%= @assignment.due_date.to_formatted_s(:long_ordinal) %></small>
+    </section>
+  </aside>
+  <div class="span8">
+    
+	<h3>Questions go here</h3>
+	  
+  </div>
+</div>

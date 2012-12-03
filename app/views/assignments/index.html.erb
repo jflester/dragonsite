@@ -1,0 +1,12 @@
+<% provide(:title, 'All assignments') %>
+<h1>All assignments</h1>
+
+<%= will_paginate %>
+
+<ul class="assignments">
+  <% @assignments.each do |assignment| %>
+    <%= render assignment %>
+  <% end %>
+</ul>
+
+<%= will_paginate %>

@@ -5,6 +5,10 @@ class Course < ActiveRecord::Base
   has_many :enrollments, foreign_key: "course_id", dependent: :destroy
   has_many :enrolled_users, through: :enrollments, source: :user
   
+  has_many :assignments
+  has_many :assignmentcourses, foreign_key: "course_id", dependent: :destroy
+  has_many :course_assignments, through: :assignmentcourses, source: :assignment
+  
   before_save { |course| course.course_name = course_name.upcase }
     
   VALID_COURSE_NAME_REGEX = /\A[a-zA-Z]{4}[0-9]{3}[a-zA-Z]*/i
@@ -21,12 +25,16 @@ class Course < ActiveRecord::Base
     enrollments.find_by_user_id(this_user.id)
   end
   
-  def enlist!(this_user)
-	self.enrollments.create!(user_id: this_user.id)
+  def hasassignment?(this_assignment)
+    assignmentcourses.find_by_assignment_id(this_assignment.id)
   end
   
-  def unenlist!(this_user)
-    self.enrollments.find_by_user_id(this_user.id).destroy
+  def addassignment!(this_assignment)
+    self.assignmentcourses.create!(assignment_id: this_assignment.id)
+  end
+  
+  def removeassignment!(this_assignment)
+    self.assignmentcourses.find_by_assignment_id(this_assignment.id).destroy
   end
   
 end

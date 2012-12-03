@@ -4,6 +4,7 @@ class CoursesController < ApplicationController
 
   def show
     @course = Course.find(params[:id])
+	@assignments = @course.assignments.paginate(page: params[:page])
   end
 
   def new

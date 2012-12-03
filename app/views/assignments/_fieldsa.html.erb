@@ -1,0 +1,16 @@
+<%= render 'shared/error_messages', object: f.object %>
+
+<%= f.label :name %>
+<%= f.text_field :name %>
+
+
+<%= f.label :due_date, "Due on:" %>
+<%= f.datetime_select :due_date, :ampm => true %>
+
+<div class="field">
+  <%= f.label :publish, "Publish?" %>
+  Yes <%= f.radio_button :published, true %> 
+  No <%= f.radio_button :published, false %>
+</div>
+
+<%= f.hidden_field(:course_id, :value => @course.id) %>

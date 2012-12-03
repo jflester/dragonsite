@@ -1,0 +1,10 @@
+<% provide(:title, 'Create Assignment') %>
+<h1>Create Assignment for <%= @course.course_name %></h1>
+<div class="row">
+  <div class="span6 offset3">
+    <%= form_for(@assignment) do |f| %>
+	  <%= render 'fieldsa', f: f %>
+	  <%= f.submit "Create assignment", class: "btn btn-large btn-primary" %>
+	<% end %>
+  </div>
+</div>
