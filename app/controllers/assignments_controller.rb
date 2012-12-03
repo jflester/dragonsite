@@ -41,7 +41,7 @@ class AssignmentsController < ApplicationController
   end
 
   def destroy
-    @assignment.destroy
+    Assignment.find(params[:id]).destroy
     redirect_to assignments_url, :notice => "Successfully destroyed assignment."
   end
 
